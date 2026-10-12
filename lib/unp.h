@@ -17,4 +17,6 @@ ssize_t writen(int fd, const void *buff, size_t nbytes);
 ssize_t readline(int fd, void *buff, size_t maxlen);
 ssize_t readlinebuf(void **buffptr);
 
+pid_t Fork(void);
+
 #endif

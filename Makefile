@@ -10,6 +10,14 @@ daytimesrv:
 	gcc -Ilib -Wall -Wextra -o bin/daytimetcpsrv lib/*.c intro/daytimetcpsrv.c
 	./bin/daytimetcpsrv
 
+echosrv:
+	gcc -Ilib -Wall -Wextra -o bin/tcpechosrv lib/*.c echo/tcpechosrv.c
+	./bin/tcpechosrv
+
+echocli:
+	gcc -Ilib -Wall -Wextra -o bin/tcpechocli lib/*.c echo/tcpechocli.c
+	./bin/tcpechocli 127.0.0.1
+
 byteorder:
 	gcc -Ilib -Wall -Wextra -Wunused-function -o bin/byteorder lib/*.c playground/byteorder.c
 	./bin/byteorder
