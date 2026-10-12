@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../config.h"
 
-int main() {
+void byteorder() {
   union {
     short s;
     char c[sizeof(short)];
@@ -19,6 +19,4 @@ int main() {
       printf("unknown\n");
   } else
     printf("sizeof(short) = %lu\n", sizeof(short));
-
-  return 0;
 }

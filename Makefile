@@ -1,6 +1,6 @@
 include ./Make.defines
 
-.PHONY: daytimecli daytimesrv byteorder pg clean distclean
+.PHONY: daytimecli daytimesrv echosrv echocli pg clean distclean
 
 daytimecli:
 	gcc -Ilib -Wall -Wextra -o bin/daytimetcpcli lib/*.c intro/daytimetcpcli.c
@@ -18,13 +18,9 @@ echocli:
 	gcc -Ilib -Wall -Wextra -o bin/tcpechocli lib/*.c echo/tcpechocli.c
 	./bin/tcpechocli 127.0.0.1
 
-byteorder:
-	gcc -Ilib -Wall -Wextra -Wunused-function -o bin/byteorder lib/*.c playground/byteorder.c
-	./bin/byteorder
-
 pg:
-	gcc -Ilib -Wall -Wextra -o bin/playground lib/*.c playground/playground.c
-	./bin/playground
+	gcc -Ilib -Wall -Wextra -o bin/playground lib/*.c playground/*.c
+	./bin/playground $(ARGS)
 
 clean:
 	rm -f $(CLEANFILES)
