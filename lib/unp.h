@@ -19,4 +19,8 @@ ssize_t readlinebuf(void **buffptr);
 
 pid_t Fork(void);
 
+typedef void Sigfunc(int); // Sigfunc is an alias for a function taking int and returning void.
+Sigfunc *signal(int signo, Sigfunc *func);
+Sigfunc *Signal(int signo, Sigfunc *func);
+
 #endif

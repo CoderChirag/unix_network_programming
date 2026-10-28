@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <sys/wait.h>
 
 #include "unp.h"
 #include "tcpecho.h"
@@ -12,6 +13,7 @@
 
 static void str_echo(int);
 static void str_cli(int);
+static void sig_chld(int signo);
 
 void server() {
   int listenfd, connfd;
@@ -32,6 +34,8 @@ void server() {
 
   if (listen(listenfd, LISTENQ) < 0)
     err_sys("listen error");
+
+  Signal(SIGCHLD, sig_chld);
 
   for (;;) {
     clilen = sizeof(cliaddr);
@@ -79,7 +83,7 @@ void client(char *ip) {
 void str_echo(int connfd) {
   ssize_t rc;
   char buf[MAXLINE];
-  char srv_ip[INET_ADDRSTRLEN], cli_ip[INET6_ADDRSTRLEN];
+  char srv_ip[INET_ADDRSTRLEN], cli_ip[INET_ADDRSTRLEN];
   socklen_t srvlen, clilen;
   struct sockaddr_in srvaddr, cliaddr;
 
@@ -137,4 +141,13 @@ void str_cli(int sockfd) {
     printf("\n> ");
     fflush(stdout);
   }
+}
+
+void sig_chld(int signo) {
+  pid_t pid;
+  int stat;
+
+  while ((pid = waitpid(-1, &stat, WNOHANG)) > 0)
+    printf("child %d terminated\n", pid);
+  return;
 }
